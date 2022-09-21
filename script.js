@@ -54,7 +54,7 @@ function agregarACarrito(productoNuevo) {
         document.getElementById("tablabody").innerHTML += (`
             <tr id='fila${prodACarrito.id}'>
             <td> ${prodACarrito.id} </td>
-            <td> ${prodACarrito.nombre}</td>
+            <td> ${prodACarrito.modelo}</td>
             <td id='${prodACarrito.id}'> ${prodACarrito.cantidad}</td>
             <td> ${prodACarrito.precio}</td>
             <td> <button class='btn btn-light' onclick='eliminar(${prodACarrito.id})'>🗑️</button>`);
