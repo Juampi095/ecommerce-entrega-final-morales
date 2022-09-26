@@ -3,6 +3,11 @@ let productosJSON = [];
 let dolarVenta;
 let lista
 
+function deleteItems() {
+    // Limpiar items del carrito
+    localStorage.clear();
+};
+
 //Evento-Cuando la ventana está cargada
 window.onload = () => {
     lista = document.getElementById("milista");
@@ -19,7 +24,7 @@ function renderizarProductos() {
     for (const prod of productosJSON) {
         lista.innerHTML += (`<li class="col-sm-3 list-group-item">
 
-        <img src="${prod.foto}" width="300px" height="250px">
+        <img src="${prod.foto}" width="250px" height="200px">
         <p class=fuenteCards>${prod.modelo}</p>
         <p>Precio $ ${prod.precio}</p>
         <p>Precio USD/USDT $ ${(prod.precio / dolarVenta).toFixed(1)}</p>
@@ -103,7 +108,7 @@ function ordenar() {
         });
     } else if (seleccion == "alfabetico") {
         productosJSON.sort(function (a, b) {
-            return a.nombre.localeCompare(b.nombre);
+            return a.modelo.localeCompare(b.modelo);
         });
     }
     lista.innerHTML = "";
@@ -123,11 +128,11 @@ async function obtenerJSON() {
 
 //function para obtener el valor del dolar blue en tiempo real
 async function obtenerValorDolar() {
-    const URLDOLAR = "https://api-dolar-argentina.herokuapp.com/api/dolarblue";
+    const URLDOLAR = "https://api.bluelytics.com.ar/v2/latest";
     const resp = await fetch(URLDOLAR)
     const data = await resp.json()
-    document.getElementById("fila_prueba").innerHTML += (`<p class="valorDolar">Dolar compra: $ ${data.compra}  Dolar venta: $ ${data.venta}</p>`);
-    dolarVenta = data.venta;
+    document.getElementById("fila_prueba").innerHTML += (`<p class="valorDolar">Dolar compra: $ ${data.value_buy}  Dolar venta: $ ${data.value_sell}</p>`);
+    dolarVenta = data.value_sell;
     //ya tengo los datos del dolar, llamo al json
     obtenerJSON();
 }
